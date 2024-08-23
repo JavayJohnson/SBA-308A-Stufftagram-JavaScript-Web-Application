@@ -1,22 +1,9 @@
-
 export const apiKey = 'Xt4D6lMWKyFObOxW4PkhlJbubXxvG7kH90CC4nsd6Cgfj8SBgtQDgpjB';
 export const apiUrl = 'https://api.pexels.com/v1/search?query=appliances';
-export async function goGetData(url) {
-  try {
- url = "https://api.pexels.com/v1/search?query=appliances";
-    const response = await fetch(url);
-    const json = await response.json();
-    // console.log(json);
-    await json.map((pic) => {
-      picHolder.push(pic.thumbnailUrl);
-    });
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-async function fetchImages() {
+
+export async function goGetData(url = apiUrl) {
     try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(url, {
             headers: {
                 Authorization: apiKey
             }
@@ -26,8 +13,21 @@ async function fetchImages() {
             throw new Error(`Error fetching data: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        displayImages(data.photos);
+        const json = await response.json();
+        const picHolder = [];
+        json.photos.forEach((pic) => {
+            picHolder.push(pic.src.medium);
+        });
+        return picHolder;
+    } catch (error) {
+        console.error('Error fetching data:', error.message);
+    }
+}
+
+export async function fetchImages() {
+    try {
+        const images = await goGetData();
+        displayImages(images);
     } catch (error) {
         console.error('Error loading images:', error);
     }
@@ -35,10 +35,11 @@ async function fetchImages() {
 
 function displayImages(images) {
     const slideshow = document.getElementById('slideshow');
+    slideshow.innerHTML = '';
     images.forEach(image => {
         const imgElement = document.createElement('img');
-        imgElement.src = image.src.medium; 
-        imgElement.alt = image.alt; 
+        imgElement.src = image;
+        imgElement.alt = 'Slideshow Image';
         slideshow.appendChild(imgElement);
     });
 }
@@ -52,5 +53,5 @@ export class ObjectProfile {
         this.image = image;
         this.status = status;
         this.posts = [];
-}   }
-goGetData(url);
+    }
+}

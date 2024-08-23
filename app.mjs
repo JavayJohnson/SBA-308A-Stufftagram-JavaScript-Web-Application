@@ -1,5 +1,4 @@
-import * as fetchData from "./fetch.mjs";
-
+import { fetchImages, ObjectProfile, goGetData } from './fetch.mjs';
 
 export const objects = [];
 
@@ -10,7 +9,6 @@ objects.push(new ObjectProfile("Febrezey Brown", "Scented Candle", "https://www.
 objects.push(new ObjectProfile("Ralph I'ron", "Wrinkled Shirt", "https://thumbs.dreamstime.com/b/wrinkled-male-white-laundered-shirt-hanger-see-my-other-works-portfolio-31100234.jpg", "Just chilling, I won't be going to work today! #Winning!"));
 objects.push(new ObjectProfile("Tel'Lie Vision", "TV", "https://imageio.forbes.com/blogs-images/startswithabang/files/2019/11/tvhouse.jpg?height=528&width=711&fit=bounds", "I always feel like somebody's watching me! And I have no privacy! It's tune out time."));
 objects.push(new ObjectProfile("Shoe'Rilla", "Shoe", "https://images.novelship.com/product/1683750697894_ConverseRu0.png?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=400", "It's 7 PM Friday, it's 95 degrees, I ain't got no shoe match and no shoe match ain't got me!"));
-
 
 const registrationForm = document.getElementById('registration-form');
 const homePage = document.getElementById('home-page');

@@ -1,5 +1,68 @@
-import { fetchImages, ObjectProfile, goGetData } from './fetch.mjs';
+export const apiKey = 'Xt4D6lMWKyFObOxW4PkhlJbubXxvG7kH90CC4nsd6Cgfj8SBgtQDgpjB';
+export const apiUrl = 'https://api.pexels.com/v1/search?query=appliances';
 
+export async function goGetData(url = apiUrl) {
+    try {
+        const response = await fetch(url, {
+            headers: {
+                Authorization: apiKey
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error fetching data: ${response.statusText}`);
+        }
+
+        const json = await response.json();
+        const picHolder = [];
+        json.photos.forEach((pic) => {
+            picHolder.push(pic.src.medium);
+        });
+        return picHolder;
+    } catch (error) {
+        console.error('Error fetching data:', error.message);
+    }
+}
+
+export async function fetchImages() {
+    try {
+        const images = await goGetData();
+        displayImages(images);
+    } catch (error) {
+        console.error('Error loading images:', error);
+    }
+}
+
+function displayImages(images) {
+    const slideshow = document.getElementById('slideshow');
+    slideshow.innerHTML = '';
+    images.forEach(image => {
+        const imgElement = document.createElement('img');
+        imgElement.src = image;
+        imgElement.alt = 'Slideshow Image';
+        slideshow.appendChild(imgElement);
+    });
+}
+
+fetchImages();
+
+export class ObjectProfile {
+    constructor(name, type, image, status) {
+        this.name = name;
+        this.type = type;
+        this.image = image;
+        this.status = status;
+        this.posts = [];
+    }
+
+    addPost(content, image) {
+        this.posts.push({ content, image });
+    }
+
+    getPosts() {
+        return this.posts;
+    }
+}
 export const objects = [];
 
 objects.push(new ObjectProfile("Southern Bell", "Analog Phone", "https://preview.free3d.com/img/2021/09/3190201403490436246/m8axmfny.jpg", "I'm on one today... My attitude is already off the hook!"));
@@ -54,16 +117,24 @@ document.getElementById('createBtn').addEventListener('click', () => {
     searchBar.classList.add('hidden');
 });
 
-document.getElementById('submitPost').addEventListener('click', () => {
+document.getElementById('submitPost').addEventListener('click', (event) => {
+    event.preventDefault();
     const postContent = document.getElementById('postContent').value;
     const postImage = document.getElementById('postImage').files[0];
-    const imageUrl = URL.createObjectURL(postImage);
 
-    const currentObject = objects[objects.length - 1];
-    currentObject.createPost(postContent, imageUrl);
+    if (postImage) {
+        const imageUrl = URL.createObjectURL(postImage);
+        const currentObject = objects[objects.length - 1];
+        currentObject.addPost(postContent, imageUrl);
 
-    createPostSection.classList.add('hidden');
-    displayFeed();
+        createPostSection.classList.add('hidden');
+        searchBar.classList.add('hidden');
+        feed.classList.remove('hidden');
+
+        displayFeed();
+    } else {
+        alert("Please upload an image.");
+    }
 });
 
 document.getElementById('searchSubmit').addEventListener('click', () => {

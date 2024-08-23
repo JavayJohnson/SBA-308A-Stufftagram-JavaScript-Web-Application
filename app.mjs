@@ -83,28 +83,17 @@ registrationForm.addEventListener('submit', (event) => {
         objects.push(newObject);
 
         document.getElementById('registration-form').reset();
+        displayFeed();
         registrationPage.classList.add('hidden');
         homePage.classList.remove('hidden');
-        displayFeed();
     } else {
         alert("Please upload an image.");
     }
 });
 
-if (postImageFile) {
-    const imageUrl = URL.createObjectURL(postImageFile);
-    const currentObject = objects[objects.length - 1];
-    currentObject.createPost(postContent, imageUrl);
-
-    createPostSection.classList.add('hidden');
-    displayFeed();
-} else {
-    alert("Please upload an image.");
-};
-
 document.getElementById('homeBtn').addEventListener('click', () => {
-    registrationPage.classList.add('hidden');
-    homePage.classList.remove('hidden');
+    registrationPage.classList.remove('hidden');
+    homePage.classList.add('hidden');
 });
 
 document.getElementById('searchBtn').addEventListener('click', () => {
@@ -118,19 +107,19 @@ document.getElementById('createBtn').addEventListener('click', () => {
 });
 
 document.getElementById('submitPost').addEventListener('click', () => {
-    const postContent = document.getElementById('postContentNew').value;
-    const postImageFile = document.getElementById('postImage').files[0];
+    const postContent = document.getElementById('postContent').value;
+    const postImage = document.getElementById('postImage').files[0];
     const imageUrl = URL.createObjectURL(postImage);
 
     const currentObject = objects[objects.length - 1];
     currentObject.createPost(postContent, imageUrl);
 
     createPostSection.classList.add('hidden');
-
     displayFeed();
+});
 
-document.getElementById('searchSubmit').addEventListener('click')
-const searchValue = searchInput.value.toLowerCase();
+document.getElementById('searchSubmit').addEventListener('click', () => {
+    const searchValue = searchInput.value.toLowerCase();
     displayFeed(searchValue);
 });
 

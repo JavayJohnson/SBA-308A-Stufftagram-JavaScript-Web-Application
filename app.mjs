@@ -1,54 +1,5 @@
-const apiKey = 'Xt4D6lMWKyFObOxW4PkhlJbubXxvG7kH90CC4nsd6Cgfj8SBgtQDgpjB';
-const apiUrl = 'https://api.pexels.com/v1/search?query=appliances';
+import * as fetchData from "./fetch.mjs";
 
-async function fetchImages() {
-    try {
-        const response = await fetch(apiUrl, {
-            headers: {
-                Authorization: apiKey
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error fetching data: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        displayImages(data.photos);
-    } catch (error) {
-        console.error('Error loading images:', error);
-    }
-}
-
-function displayImages(images) {
-    const slideshow = document.getElementById('slideshow');
-    images.forEach(image => {
-        const imgElement = document.createElement('img');
-        imgElement.src = image.src.medium; 
-        imgElement.alt = image.alt; 
-        slideshow.appendChild(imgElement);
-    });
-}
-
-fetchImages();
-
-export class ObjectProfile {
-    constructor(name, type, image, status) {
-        this.name = name;
-        this.type = type;
-        this.image = image;
-        this.status = status;
-        this.posts = [];
-    }
-
-    createPost(content, image) {
-        this.posts.push({ content, image });
-    }
-
-    getPosts() {
-        return this.posts;
-    }
-}
 
 export const objects = [];
 
@@ -59,7 +10,6 @@ objects.push(new ObjectProfile("Febrezey Brown", "Scented Candle", "https://www.
 objects.push(new ObjectProfile("Ralph I'ron", "Wrinkled Shirt", "https://thumbs.dreamstime.com/b/wrinkled-male-white-laundered-shirt-hanger-see-my-other-works-portfolio-31100234.jpg", "Just chilling, I won't be going to work today! #Winning!"));
 objects.push(new ObjectProfile("Tel'Lie Vision", "TV", "https://imageio.forbes.com/blogs-images/startswithabang/files/2019/11/tvhouse.jpg?height=528&width=711&fit=bounds", "I always feel like somebody's watching me! And I have no privacy! It's tune out time."));
 objects.push(new ObjectProfile("Shoe'Rilla", "Shoe", "https://images.novelship.com/product/1683750697894_ConverseRu0.png?fit=fill&bg=FFFFFF&trim=color&auto=format,compress&q=75&h=400", "It's 7 PM Friday, it's 95 degrees, I ain't got no shoe match and no shoe match ain't got me!"));
-
 
 
 const registrationForm = document.getElementById('registration-form');

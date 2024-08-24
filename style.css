@@ -96,6 +96,7 @@ nav button:hover {
     background-color: #fafafa;
 }
 
+
 .feed-item img {
     width: 3in;
     height: 3in;
@@ -105,18 +106,49 @@ nav button:hover {
     box-sizing: border-box;
 }
 
-#search-bar, #create-post {
-    margin: 20px 0;
+#search-bar {
+    margin-top: 20px;
+    border: 5px solid red;
+    padding: 20px;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    background-color: #f9f9f9;
+    border-radius: 10px;
 }
 
-#searchInput, #postContent {
+ #create-post {
+    margin-top: 20px;
+    border: 5px solid red;
+    padding: 10px;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+
+#searchInput {
     width: 80%;
     padding: 10px;
     margin: 10px 0;
 }
 
+#postContent {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+
 textarea {
-    resize: none;
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    /* resize:none; */
 }
 
 

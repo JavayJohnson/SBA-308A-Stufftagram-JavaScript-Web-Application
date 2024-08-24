@@ -63,6 +63,7 @@ export class ObjectProfile {
         return this.posts;
     }
 }
+
 export const objects = [];
 
 objects.push(new ObjectProfile("Southern Bell", "Analog Phone", "https://preview.free3d.com/img/2021/09/3190201403490436246/m8axmfny.jpg", "I'm on one today... My attitude is already off the hook!"));
@@ -144,7 +145,7 @@ document.getElementById('searchSubmit').addEventListener('click', () => {
 
 function displayFeed(searchQuery = '') {
     feed.innerHTML = '';
-    objects.forEach((object) => {
+    objects.slice().reverse().forEach((object) => {
         if (object.name.toLowerCase().includes(searchQuery) || object.type.toLowerCase().includes(searchQuery)) {
             const feedItem = document.createElement('div');
             feedItem.classList.add('feed-item');
@@ -153,14 +154,17 @@ function displayFeed(searchQuery = '') {
                 <img src="${object.image}" alt="${object.name}">
                 <p>${object.status}</p>
             `;
-            object.getPosts().forEach(post => {
+
+            object.getPosts().slice().reverse().forEach(post => {
                 const postElement = document.createElement('div');
+                postElement.classList.add('post-item');
                 postElement.innerHTML = `
-                    <img src="${post.image}" alt="Post image">
-                    <p>${post.content}</p>
+                    <img src="${post.image}" alt="Post image" class="post-image">
+                    <p class="post-content">${post.content}</p>
                 `;
                 feedItem.appendChild(postElement);
             });
+
             feed.appendChild(feedItem);
         }
     });
